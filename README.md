@@ -30,7 +30,7 @@ streamlit run dataset_treater.py
 
 This is a web application, so it should be easy to use (I hope).
 
-[streamlit-dataset_treater-2024-11-21-04-11-13.webm](https://github.com/user-attachments/assets/b3c6e0fb-1e4f-412f-9be1-c52ec28a6f3f)
+[streamlit-dataset_treater-2024-11-21-06-11-47.webm](https://github.com/user-attachments/assets/92148762-d858-4c04-8759-1692b7c211db)
 
 ## Contact
 
