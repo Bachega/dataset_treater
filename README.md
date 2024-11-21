@@ -7,6 +7,7 @@ Welcome to the Dataset Treater project! This tool is designed to help pre-proces
 - **Accepts .CSV and .ARFF datasets**: If the file is .ARFF, it will try to convert it to a .CSV as best as it can.
 - **Class Proportion Chart**: It will try to automatically detect the class (binary classes, for now). It will then print the columns of the dataframe that it thinks is the class column, alongside a pie chart of the class proportions.
 - **Meta-Features Extraction Test**: Quantifier Recommender is a Meta-learning project, so we need to extract Meta-features. This runs a Meta-feature extraction function on the dataset and warns you if it was successful (or not).
+- **Scorer Test**: Quantifier Recommender uses scorers (classifiers that produce class probabilities), so we need to test if a scorer can fail for a dataset or not. It also estimates True Positive Rate and False Positive Rate (this is important for our project).
 - **Edit and download**: You can edit the dataset freely and download it as a .CSV file.
 
 ## Installation
@@ -33,4 +34,4 @@ This is a web application, so it should be easy to use (I hope).
 
 ## Contact
 
-If you have any questions or feedback (or a job opportunity... :D) reach out to me at [guizobachegagomes@gmail.com](mailto:guizobachegagomes@gmail.com).
+If you have any questions or feedback (or a job opportunity... :D) reach out to me at [guizobachegagomes@gmail.com](mailto:guizobachegagomes@gmail.com)
