@@ -14,7 +14,7 @@ Welcome to the Dataset Treater project! This tool is designed to help pre-proces
 To install Dataset Treater, clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/yourusername/dataset_treater.git
+git clone https://github.com/Bachega/dataset_treater.git
 cd dataset_treater
 pip install -r requirements.txt
 ```
