@@ -1,6 +1,6 @@
 # Dataset Treater
 
-Welcome to the Dataset Treater project! This tool is designed to help pre-process datasets for the Quantifier Recommender project, so it may not be useful to you.
+Welcome to the Dataset Treater project. This tool is designed to help pre-process datasets for the Quantifier Recommender project, so it may not be useful to you.
 
 ## Features
 
