@@ -17,8 +17,11 @@ def class_selector_and_prevalence(df):
 
         with st.container():
             dataset_size = len(df)
-            pos_prop = len(df[df[class_col] == 1]) / dataset_size
-            neg_prop = len(df[df[class_col] == 0]) / dataset_size
+
+            class_list = sorted(df[class_col].unique().tolist())
+
+            pos_prop = len(df[df[class_col] == class_list[1]]) / dataset_size
+            neg_prop = len(df[df[class_col] == class_list[0]]) / dataset_size
             
             col1, col2 = st.columns(2)
             with col1:
@@ -30,14 +33,14 @@ def class_selector_and_prevalence(df):
             neg_number_sample_test = ceil(neg_prop * dataset_size * test_size)
 
             if pos_number_sample_test > sample_size:
-                st.markdown(f"<span style='color:green'>Positive samples for test: {pos_number_sample_test}</span>", unsafe_allow_html=True)
+                st.write(f":green[Positive samples for test: {pos_number_sample_test}]")
             else:
-                st.markdown(f"<span style='color:red'>Positive samples for test: {pos_number_sample_test}</span>", unsafe_allow_html=True)
+                st.write(f":red[Positive samples for test: {pos_number_sample_test}]")
             
             if neg_number_sample_test > sample_size:
-                st.markdown(f"<span style='color:green'>Negative samples for test: {neg_number_sample_test}</span>", unsafe_allow_html=True)
+                st.write(f":green[Negative samples for test: {neg_number_sample_test}]")
             else:
-                st.markdown(f"<span style='color:red'>Negative samples for test: {neg_number_sample_test}</span>", unsafe_allow_html=True)
+                st.write(f":red[Negative samples for test: {neg_number_sample_test}]")
     return class_col
 
 def edit_dataset():
@@ -58,6 +61,13 @@ def edit_menu(df):
 
 df = load_dataframe()
 if df is not None:
+    with st.container(border=True):
+        st.subheader("Check if everything seems in order before proceeding")
+        show_all = st.checkbox("Show all rows", value=False)
+        if show_all:
+            st.dataframe(df)
+        else:
+            st.dataframe(df.head(6))
     edit_menu(df)
 else:
     st.session_state.show_controls = False

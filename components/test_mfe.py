@@ -39,8 +39,6 @@ def run_test(df, class_col):
     y = df[class_col].to_numpy()
     X = df.drop(columns=[class_col]).to_numpy()
 
-    # import pdb; pdb.set_trace()
-
     return extract_meta_features(mfe, X, y)
 
 def test_mfe(df, class_col):
@@ -58,4 +56,3 @@ def test_mfe(df, class_col):
             except Exception as e:
                 st.write(":red[Something went wrong...]")
                 st.error(f"{e}")
-        

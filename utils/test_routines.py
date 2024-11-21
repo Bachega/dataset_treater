@@ -65,8 +65,6 @@ def load_train_test_data(dataset_name: str, train_data_path: str, test_data_path
 
     return X_train.to_numpy(), y_train.to_numpy(), X_test.to_numpy(), y_test.to_numpy()
 
-
-
 def test_clf():
     logger = logging.getLogger(__name__)
     logging.basicConfig(filename='clf_test.log', encoding='utf-8', level=logging.DEBUG)
