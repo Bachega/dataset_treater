@@ -2,11 +2,17 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-from components import load_dataframe, class_selector, class_proportion, test_mfe, test_scorer
+from components import load_dataframe, class_selector, class_proportion, test_mfe, test_scorer, preprocess_data
 from math import ceil
 
 if "show_controls" not in st.session_state:
     st.session_state.show_controls = False
+
+if "df" not in st.session_state:
+    st.session_state.df = None
+
+if "class_col" not in st.session_state:
+    st.session_state.class_col = None
 
 st.set_page_config(page_title="Dataset Treater")
 st.title("Dataset Treater")
@@ -56,21 +62,15 @@ def edit_dataset():
                         mime="text/csv")
 
 def menu(df):
+    # col1, col2 = st.columns(2)
     class_col = class_selector_and_prevalence(df)
-    test_mfe(df, class_col)
-    test_scorer(df, class_col)
+    df = preprocess_data(df, class_col)
+    test_mfe(st.session_state.df, class_col)
+    test_scorer(st.session_state.df, class_col)
     edit_dataset()
 
-df_final = None
 df = load_dataframe()
 if df is not None:
-    with st.container(border=True):
-        st.subheader("Check if everything seems in order before proceeding")
-        show_all = st.checkbox("Show all rows", value=False)
-        if show_all:
-            st.dataframe(df)
-        else:
-            st.dataframe(df.head(6))
     menu(df)
 else:
     st.session_state.show_controls = False
