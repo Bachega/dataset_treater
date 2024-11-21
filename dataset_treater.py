@@ -2,12 +2,13 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-from components import load_dataframe, class_selector, class_proportion, test_mfe
+from components import load_dataframe, class_selector, class_proportion, test_mfe, test_scorer
 from math import ceil
 
 if "show_controls" not in st.session_state:
     st.session_state.show_controls = False
 
+st.set_page_config(page_title="Dataset Treater")
 st.title("Dataset Treater")
 
 def class_selector_and_prevalence(df):
@@ -54,11 +55,13 @@ def edit_dataset():
                         file_name='edited_dataframe.csv',
                         mime="text/csv")
 
-def edit_menu(df):
+def menu(df):
     class_col = class_selector_and_prevalence(df)
     test_mfe(df, class_col)
+    test_scorer(df, class_col)
     edit_dataset()
 
+df_final = None
 df = load_dataframe()
 if df is not None:
     with st.container(border=True):
@@ -68,6 +71,6 @@ if df is not None:
             st.dataframe(df)
         else:
             st.dataframe(df.head(6))
-    edit_menu(df)
+    menu(df)
 else:
     st.session_state.show_controls = False

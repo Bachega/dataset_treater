@@ -31,9 +31,8 @@ def extract_meta_features(mfe, X, y=None):
 
     return columns, features
 
+@st.cache_data
 def run_test(df, class_col):
-    df = df.dropna()
-
     mfe = MFE()
 
     y = df[class_col].to_numpy()
