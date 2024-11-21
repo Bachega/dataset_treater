@@ -2,8 +2,6 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import StratifiedKFold
 
-
-
 def getTrainingScores(X_train, Y_train, folds, clf, verbose = False):
     """
     This function estiamtes the scores of the provided training set using k-fold stratified cross-validation

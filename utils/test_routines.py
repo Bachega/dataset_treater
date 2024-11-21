@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 import os
@@ -9,8 +8,8 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from pymfe.mfe import MFE
 
-from getTrainingScores import getTrainingScores
-from getTPRFPR import getTPRFPR
+from .getTrainingScores import getTrainingScores
+from .getTPRFPR import getTPRFPR
 
 def find_class(dataframe):
     columns_with_two_unique_values = [col for col in dataframe.columns if dataframe[col].nunique() == 2]
