@@ -19,7 +19,7 @@ def preprocess_data(df, class_col):
             with col4:
                 use_one_hot_encoding = st.checkbox("One-Hot Encoding", value=False, key='one_hot_encoding')
 
-            if st.button("Pre-process", key='run_processing'):
+            if st.button("Preprocess", key='run_processing'):
                 if use_label_encoder:
                     le = LabelEncoder()
                     df[class_col] = le.fit_transform(df[class_col])
