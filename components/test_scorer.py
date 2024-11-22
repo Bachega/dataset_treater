@@ -60,7 +60,7 @@ def test_scorer(df, class_col):
         if st.button("Run Test", key='run-scorer'):
             try:
                 scores, tprfpr, clf, calib_clf = run_scorer_test(df, class_col, selected_scorer, selected_norm)
-                st.write(":green[OK]")
+                st.success("OK")
                 
                 col3, col4 = st.columns(2)
                 with col3:

@@ -11,20 +11,30 @@ if "show_controls" not in st.session_state:
 if "df" not in st.session_state:
     st.session_state.df = None
 
+if "df_og" not in st.session_state:
+    st.session_state.df_og = None
+
 if "class_col" not in st.session_state:
     st.session_state.class_col = None
+
+if "treatments" not in st.session_state:
+    st.session_state.treatments = {}
+
+if "tests_run" not in st.session_state:
+    st.session_state.tests_run = []
 
 st.set_page_config(page_title="Dataset Treater")
 st.title("Dataset Treater")
 
-def class_selector_and_prevalence(df):
+def class_selector_and_prevalence():
+    df = st.session_state.df
+    
     with st.container(border=True):
         class_col = class_selector(df)
         class_proportion(df, class_col)
 
         with st.container():
             dataset_size = len(df)
-
             class_list = sorted(df[class_col].unique().tolist())
 
             pos_prop = len(df[df[class_col] == class_list[1]]) / dataset_size
@@ -48,29 +58,57 @@ def class_selector_and_prevalence(df):
                 st.write(f":green[Negative samples for test: {neg_number_sample_test}]")
             else:
                 st.write(f":red[Negative samples for test: {neg_number_sample_test}]")
+
+        preprocess_data(st.session_state.df, class_col)
+        
     return class_col
 
-def edit_dataset():
-    st.title("Edit dataset")
-    st.write("Edit freely the dataset below")
-    with st.container(border=True):
-        edited_df = st.data_editor(df)
-        csv = edited_df.to_csv(index=False)
-        st.download_button(label="Save and Download",
-                        data=csv,
-                        file_name='edited_dataframe.csv',
-                        mime="text/csv")
+def review(class_col):
+    st.title("Review")
+    st.subheader(f"Class: :blue[{class_col}]")
+    if 'show_original' not in st.session_state:
+        st.session_state.show_original = False
 
-def menu(df):
+    st.session_state.show_original = st.checkbox("Show Original Dataset", value=st.session_state.show_original)
+
+    st.subheader("Treated dataset")
+    st.dataframe(st.session_state.df)
+
+    if st.session_state.show_original:
+        st.subheader("Original dataset")
+        st.dataframe(st.session_state.df_og)
+
+    df = st.session_state.df.copy(deep=True)
+    if class_col != 'class':
+        df['class'] = df[class_col]
+        df = df.drop(columns=[class_col])
+        class_col = 'class'
+        # csv = st.session_state.df.to_csv(index=False)
+    csv = df.to_csv(index=False)
+    file_name = st.session_state.uploaded_file.split('.')[0]+'.csv'
+    st.download_button(label="Save and Download",
+                    data=csv,
+                    file_name=file_name,
+                    mime="text/csv")
+
+def undo_changes():
+    if st.button("Undo Changes"):
+        st.session_state.df = st.session_state.df_og.copy(deep=True)
+        st.rerun()
+
+def menu():
     # col1, col2 = st.columns(2)
-    class_col = class_selector_and_prevalence(df)
-    df = preprocess_data(df, class_col)
+    undo_changes()
+    class_col = class_selector_and_prevalence()
+    # preprocess_data(st.session_state.df, class_col)
     test_mfe(st.session_state.df, class_col)
     test_scorer(st.session_state.df, class_col)
-    edit_dataset()
+    review(class_col)
 
-df = load_dataframe()
-if df is not None:
-    menu(df)
+load_dataframe()
+if st.session_state.df is not None:
+    # st.write(st.session_state.df)
+    # st.write(st.session_state.df.drop_duplicates())
+    menu()
 else:
     st.session_state.show_controls = False

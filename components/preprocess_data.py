@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 
 def preprocess_data(df, class_col):
-    with st.container(border = True):
+    with st.container(border = False):
         st.subheader("Pre-processing")
         
         with st.container(border = False):
@@ -15,7 +15,7 @@ def preprocess_data(df, class_col):
             with col2:
                 drop_missing_values = st.checkbox("Drop Missing Values", value=False, key='missing_val')
             with col3:
-                drop_duplicates = st.checkbox("Drop Missing Values", value=False, key='drop_dupes')
+                drop_duplicates = st.checkbox("Drop Duplicates", value=False, key='drop_dupes')
             with col4:
                 use_one_hot_encoding = st.checkbox("One-Hot Encoding", value=False, key='one_hot_encoding')
 
@@ -52,8 +52,18 @@ def preprocess_data(df, class_col):
                         st.write("No categorical columns present")
 
                 st.success("Pre-processing completed")
+                st.session_state.df = df
+                st.rerun()
+
+            st.markdown(f"""
+            - **Number of rows:** {df.shape[0]}
+            - **Number of columns:** {df.shape[1]}
+            - **Missing values:** {df.isnull().sum().sum()}
+            - **Duplicate rows:** {df.duplicated().sum()}
+            """)
+
             show_all = st.checkbox("Show all rows", value=False)
             if show_all:
-                st.dataframe(df)
+                st.dataframe(st.session_state.df)
             else:
-                st.dataframe(df.head(6))
+                st.dataframe(st.session_state.df.head(6))

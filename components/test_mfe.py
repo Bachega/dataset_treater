@@ -49,7 +49,7 @@ def test_mfe(df, class_col):
                 columns, features = run_test(df, class_col)
                 mfe_df = pd.DataFrame(columns=columns, data=[features])
 
-                st.write(":green[OK]")
+                st.success("OK")
                 st.write(f"Number of features: {len(columns)}")
                 st.dataframe(mfe_df)
             except Exception as e:
